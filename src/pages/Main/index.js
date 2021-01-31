@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Keyboard, ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import api from '../../services/api';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Keyboard, ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import api from "../../services/api";
 
 import {
   Container,
@@ -16,28 +16,28 @@ import {
   Name,
   Bio,
   ProfileButton,
-  ProfileButtonText,
-} from './styles';
+  ProfileButtonText
+} from "./styles";
 
 export default class Main extends Component {
   static navigationOptions = {
-    title: 'Usuários',
+    title: "Usuários"
   };
 
   static propTypes = {
     navigation: PropTypes.shape({
-      navigate: PropTypes.func,
-    }).isRequired,
+      navigate: PropTypes.func
+    }).isRequired
   };
 
   state = {
-    newUser: '',
+    newUser: "",
     users: [],
-    loading: false,
+    loading: false
   };
 
   async componentDidMount() {
-    const users = await AsyncStorage.getItem('users');
+    const users = await AsyncStorage.getItem("users");
 
     if (users) {
       this.setState({ users: JSON.parse(users) });
@@ -48,7 +48,7 @@ export default class Main extends Component {
     const { users } = this.state;
 
     if (prevState.users !== users) {
-      AsyncStorage.setItem('users', JSON.stringify(users));
+      AsyncStorage.setItem("users", JSON.stringify(users));
     }
   }
 
@@ -63,13 +63,13 @@ export default class Main extends Component {
       name: response.data.name,
       login: response.data.login,
       bio: response.data.bio,
-      avatar: response.data.avatar_url,
+      avatar: response.data.avatar_url
     };
 
     this.setState({
       users: [...users, data],
-      newUser: '',
-      loading: false,
+      newUser: "",
+      loading: false
     });
 
     Keyboard.dismiss();
@@ -78,7 +78,7 @@ export default class Main extends Component {
   handleNavigate = user => {
     const { navigation } = this.props;
 
-    navigation.navigate('User', { user });
+    navigation.navigate("User", { user });
   };
 
   render() {
@@ -124,3 +124,4 @@ export default class Main extends Component {
     );
   }
 }
+
